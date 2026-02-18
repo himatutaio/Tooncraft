@@ -2,7 +2,13 @@
 import { GoogleGenAI, VideoGenerationReferenceType } from "@google/genai";
 import { Character } from "./types";
 
-const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
+const getAI = () => {
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  if (!apiKey) {
+    throw new Error('Google API Key is missing. Please add your Google AI Studio API key to the .env file as VITE_GOOGLE_API_KEY. Instructions: https://aistudio.google.com/apikey');
+  }
+  return new GoogleGenAI({ apiKey });
+};
 
 export const generateCharacterImage = async (prompt: string): Promise<{ base64: string; url: string }> => {
   const ai = getAI();
@@ -35,7 +41,7 @@ export const generateCharacterImage = async (prompt: string): Promise<{ base64: 
 };
 
 export const generateCartoonScene = async (prompt: string, characters: Character[]): Promise<string> => {
-  const currentKey = process.env.API_KEY;
+  const currentKey = import.meta.env.VITE_GOOGLE_API_KEY;
   const ai = getAI();
   
   const referenceImagesPayload = characters.slice(0, 3).map(char => ({
