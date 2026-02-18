@@ -2,8 +2,10 @@
 import { GoogleGenAI, VideoGenerationReferenceType } from "@google/genai";
 import { Character } from "./types";
 
+const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
+
 export const generateCharacterImage = async (prompt: string): Promise<{ base64: string; url: string }> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash-image',
     contents: {
@@ -34,7 +36,7 @@ export const generateCharacterImage = async (prompt: string): Promise<{ base64: 
 
 export const generateCartoonScene = async (prompt: string, characters: Character[]): Promise<string> => {
   const currentKey = process.env.API_KEY;
-  const ai = new GoogleGenAI({ apiKey: currentKey });
+  const ai = getAI();
   
   const referenceImagesPayload = characters.slice(0, 3).map(char => ({
     image: {
@@ -70,4 +72,18 @@ export const generateCartoonScene = async (prompt: string, characters: Character
   
   const videoBlob = await videoResponse.blob();
   return URL.createObjectURL(videoBlob);
+};
+
+// --- NIEUWE EDUCATIEVE FUNCTIES ---
+
+export const generateTextContent = async (systemInstruction: string, prompt: string): Promise<string> => {
+  const ai = getAI();
+  const response = await ai.models.generateContent({
+    model: 'gemini-3-flash-preview',
+    contents: prompt,
+    config: {
+      systemInstruction: systemInstruction,
+    }
+  });
+  return response.text || "Fout bij genereren van tekst.";
 };

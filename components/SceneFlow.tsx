@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Scene, Character } from '../types';
 import { generateCartoonScene } from '../geminiService';
-import { Download, Loader2, Send, Film, AlertCircle, Key, Play } from 'lucide-react';
+import { Download, Loader2, Send, Film, AlertCircle, Play } from 'lucide-react';
 
 interface SceneFlowProps {
   scenes: Scene[];
@@ -39,10 +39,10 @@ export const SceneFlow: React.FC<SceneFlowProps> = ({ scenes, characters, onAddS
       const errorMsg = err?.message || String(err);
       
       if (errorMsg.includes("PERMISSION_DENIED") || errorMsg.includes("403")) {
-        setLocalError("Toegang geweigerd. Je API sleutel heeft geen rechten voor Veo (check of facturering aan staat).");
+        setLocalError("Toegang geweigerd. Neem contact op met de systeembeheerder.");
         onApiError(err);
       } else if (errorMsg.includes("Requested entity was not found")) {
-        setLocalError("Systeemfout: Het Veo model is niet beschikbaar voor deze sleutel.");
+        setLocalError("Systeemfout: De AI service is tijdelijk niet beschikbaar.");
         onApiError(err);
       } else {
         setLocalError("Er is iets misgegaan bij het maken van de video. Probeer het opnieuw.");
@@ -94,15 +94,6 @@ export const SceneFlow: React.FC<SceneFlowProps> = ({ scenes, characters, onAddS
             <AlertCircle className="w-5 h-5 flex-shrink-0" />
             <p>{localError}</p>
           </div>
-          {(localError.includes("Toegang geweigerd") || localError.includes("Systeemfout")) && (
-            <button 
-              onClick={onChangeKey}
-              className="flex items-center justify-center gap-2 w-full py-2 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors"
-            >
-              <Key className="w-4 h-4" />
-              Reset API Sleutel
-            </button>
-          )}
         </div>
       )}
 

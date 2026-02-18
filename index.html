@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToonCraft AI - Cartoon Studio</title>
+    <title>ToonCraft Basisschool - Pixar Studio in de Klas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,13 +12,13 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fafc;
+            background-color: #fafbff;
         }
         .cartoon-shadow {
-            box-shadow: 4px 4px 0px 0px #000;
+            box-shadow: 4px 4px 0px 0px #1e1b4b; /* Indigo 950 */
         }
         .cartoon-border {
-            border: 2px solid #000;
+            border: 2px solid #1e1b4b;
         }
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -27,6 +27,20 @@
         }
         .animate-float {
             animation: float 3s ease-in-out infinite;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 <script type="importmap">
