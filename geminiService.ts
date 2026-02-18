@@ -5,7 +5,7 @@ import { Character } from "./types";
 const getAI = () => {
   const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
   if (!apiKey) {
-    throw new Error('GOOGLE_API_KEY_MISSING: Voeg je Google AI Studio API key toe aan het .env bestand');
+    throw new Error('Google API Key is missing. Please add your Google AI Studio API key to the .env file as VITE_GOOGLE_API_KEY. Instructions: https://aistudio.google.com/apikey');
   }
   return new GoogleGenAI({ apiKey });
 };
